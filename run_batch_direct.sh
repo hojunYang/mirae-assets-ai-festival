@@ -13,6 +13,24 @@ log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a $LOG_FILE
 }
 
+# 간단한 서버 재시작 함수
+restart_app_server() {
+    # 기존 app.py 프로세스 찾아서 종료
+    local app_pid=$(pgrep -f "python.*app.py")
+    
+    if [ -n "$app_pid" ]; then
+        log "기존 app.py 프로세스 종료 중... (PID: $app_pid)"
+        kill $app_pid
+        sleep 2
+    fi
+    
+    # 새로 시작
+    log "새로운 app.py 서버 시작 중..."
+    cd /root/MA
+    nohup python app.py > /dev/null 2>&1 &
+    log "app.py 서버 재시작 완료 (로그는 server_$(date +%Y%m%d).log 확인)"
+}
+
 log "=== 직접 Python 실행 배치 작업 시작 ==="
 
 # 프로젝트 디렉토리로 이동
@@ -49,6 +67,10 @@ except Exception as e:
 # 실행 결과 확인
 if [ $? -eq 0 ]; then
     log "배치 작업 성공적으로 완료"
+    
+    # 배치 성공시 app.py 서버 재시작
+    log "app.py 서버 재시작 중..."
+    restart_app_server
 else
     log "배치 작업 실패 (종료 코드: $?)"
 fi
