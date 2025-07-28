@@ -1,0 +1,23 @@
+# Web Framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+
+# HTTP and Networking  
+requests>=2.31.0
+
+# Data Processing and Analysis
+pandas>=2.1.0
+numpy>=1.24.0
+
+# Financial Data
+yfinance>=0.2.20
+pandas-market-calendars>=4.3.0
+
+# Database
+duckdb>=0.9.0
+
+# Web Scraping
+fake-useragent>=1.4.0
+
+# CORS support for FastAPI
+python-multipart>=0.0.6
