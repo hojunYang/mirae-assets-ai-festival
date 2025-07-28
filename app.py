@@ -210,11 +210,14 @@ if __name__ == "__main__":
     
     # 환경변수에서 설정 읽기
     host = os.getenv("HOST", "0.0.0.0")
-    port = int(os.getenv("PORT", 8000))
+    port = int(os.getenv("PORT", 80))
     
     print(f"서버를 시작합니다: http://{host}:{port}")
     print("사용법:")
-    print('  curl -X GET "http://localhost:8000/agent?question=삼성전자%20주가" \\')
+    if port == 80:
+        print('  curl -X GET "http://49.50.132.254/agent?question=삼성전자%20주가" \\')
+    else:
+        print(f'  curl -X GET "http://49.50.132.254:{port}/agent?question=삼성전자%20주가" \\')
     print('    -H "Authorization: Bearer your-api-key" \\')
     print('    -H "X-NCP-CLOVASTUDIO-REQUEST-ID: your-request-id"')
     
