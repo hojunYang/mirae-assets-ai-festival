@@ -1,0 +1,8 @@
+*.log
+*.csv
+tuning/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+*.duckdb
