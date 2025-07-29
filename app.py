@@ -184,10 +184,7 @@ async def agent(
         
         logger.info(f"응답 생성 완료: {len(response_content)}자, 대화 길이: {len(chatbot.conversation_history)}")
         
-        return {
-            "text": response_content,
-            "timestamp": datetime.now().isoformat()
-        }
+        return response_content
         
     except Exception as e:
         logger.error(f"질문 처리 중 오류 발생: {str(e)}")
