@@ -37,14 +37,14 @@ start_app_server() {
 
 log "=== 배치 작업 시작 ==="
 
-# 1. 먼저 app 서버 종료
-stop_app_server
+# 가상환경 활성화
+source venv/bin/activate
 
 # 프로젝트 디렉토리로 이동
 cd /root/MA
 
-# 가상환경 활성화
-source venv/bin/activate
+# 1. 먼저 app 서버 종료
+stop_app_server
 
 # 2. 배치 작업 실행
 log "Python 배치 작업 실행 중..."
@@ -57,14 +57,13 @@ from batch import StockDataProcessor
 
 # 현재 날짜 사용
 today = date.today()
-start_date = today - timedelta(days=30)
 
 print(f'배치 작업 시작: {today.strftime(\"%Y-%m-%d\")}')
-print(f'데이터 수집 기간: {start_date.strftime(\"%Y-%m-%d\")} ~ {today.strftime(\"%Y-%m-%d\")}')
+print(f'데이터 수집 기간: {today.strftime(\"%Y-%m-%d\")} ~ {today.strftime(\"%Y-%m-%d\")}')
 
 try:
     processor = StockDataProcessor(today)
-    processor.process_data(start_date, today)
+    processor.process_data(today, today)
     print('배치 작업 완료')
 except Exception as e:
     print(f'배치 작업 중 오류 발생: {str(e)}')
@@ -95,12 +94,11 @@ print(f'현재 시간: {datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\")}')
 log "시스템 정보:"
 log "$SYSTEM_INFO"
 
-# 가상환경 비활성화
-deactivate
-
 # 3. 성공/실패 상관없이 app 서버 다시 시작
 start_app_server
 
+# 가상환경 비활성화
+deactivate
 log "=== 배치 작업 종료 ==="
 
 echo "로그 파일: $LOG_FILE" 

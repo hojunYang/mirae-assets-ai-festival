@@ -19,7 +19,6 @@ API URL = http://49.50.132.254/agent
 
 **Curl 예시:**
 ```bash
-# 삼성전자 주가 조회
 curl -X GET "http://49.50.132.254/agent?question=질문내용" \
   -H "Authorization: Bearer your-api-key" \
   -H "X-NCP-CLOVASTUDIO-REQUEST-ID: your-request-id"
@@ -83,6 +82,7 @@ print(response.text) # LLM 응답 텍스트 출력
 
 #### 4. 배치 처리 시스템
 - **스케줄링**: 21시 기준 일 단위 데이터 갱신 및 지표 계산
+- **서버정지**: 배치 작업이 도는 동안 서버를 사용할 수 없음(약 5분 소요)
 
 ### 편의기능
 
