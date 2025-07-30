@@ -627,11 +627,11 @@ class Tools:
                             'sale_type': 'DELISTING'
                         })
                     positions = positions[~positions['current_price'].isna()]
-                # 익절/손절 조건 확인 손절부터 처리
-                positions['stop_loss_triggered'] = positions['current_price_low'] <= positions['stop_loss_price']
-                positions['take_profit_triggered'] = (~positions['stop_loss_triggered']) & (positions['current_price_high'] >= positions['take_profit_price'])
+                # 익절/손절 조건 확인 익절부터 처리
+                positions['take_profit_triggered'] = positions['current_price_high'] >= positions['take_profit_price']
+                positions['stop_loss_triggered'] = (~positions['take_profit_triggered']) & (positions['current_price_low'] <= positions['stop_loss_price'])
                 
-                sell_positions = positions[positions['stop_loss_triggered'] | positions['take_profit_triggered']]
+                sell_positions = positions[positions['take_profit_triggered'] | positions['stop_loss_triggered']]
 
                 # 익절/손절 조건 확인
                 if not sell_positions.empty:

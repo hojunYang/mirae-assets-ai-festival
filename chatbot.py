@@ -93,7 +93,7 @@ class MiraeAIFestivalchatbot:
                 self.endpoint, headers=self.headers, json=request_data
             )
 
-            return self._handle_response(response, request_data)
+            return self._handle_response(response, request_data, limit_count=1)
 
         except Exception as e:
             error_msg = f"예상치 못한 오류가 발생했습니다: {str(e)}"
@@ -104,6 +104,7 @@ class MiraeAIFestivalchatbot:
         self,
         response_message: Dict[str, Any],
         request_data: Dict[str, Any],
+        limit_count: int,
     ) -> str:
         self.logger.info("Function Calling 처리 시작")
 
@@ -210,7 +211,7 @@ class MiraeAIFestivalchatbot:
             response = requests.post(
                 self.endpoint, headers=self.headers, json=request_data
             )
-            return self._handle_response(response, request_data)
+            return self._handle_response(response, request_data, limit_count=limit_count)
 
         except Exception as e:
             error_msg = f"함수 호출 후 응답 생성 중 오류가 발생했습니다: {str(e)}"
@@ -221,6 +222,7 @@ class MiraeAIFestivalchatbot:
         self,
         response: requests.Response,
         request_data: Dict[str, Any],
+        limit_count: int,
     ) -> str:
 
         self.logger.info(f"API 응답 수신: HTTP {response.status_code}")
@@ -241,8 +243,10 @@ class MiraeAIFestivalchatbot:
             toolCalls = response_message.get("toolCalls")
 
             if toolCalls:
+                if limit_count > 5:
+                    return "죄송합니다. 사용자의 요청을 처리할 수 없습니다. 다시 시도해주세요."
                 self.logger.info(f"Function Calling 감지: {len(toolCalls)}개 호출")
-                return self._handle_function_calls(response_message, request_data)
+                return self._handle_function_calls(response_message, request_data, limit_count + 1)
             else:
                 content = response_message.get("content", "")
                 # content에 도구 실행 요청이 포함되어 있는지 확인
@@ -270,7 +274,7 @@ class MiraeAIFestivalchatbot:
                         new_response = requests.post(
                             self.endpoint, headers=self.headers, json=new_request_data
                         )
-                        return self._handle_response(new_response, new_request_data)
+                        return self._handle_response(new_response, new_request_data, limit_count)
                     except Exception as e:
                         self.logger.error(f"재요청 중 오류: {str(e)}")
                         return content  # 원래 응답 반환

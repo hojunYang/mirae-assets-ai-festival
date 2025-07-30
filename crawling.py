@@ -152,9 +152,9 @@ class MarketDataCollector:
                 return response.json()
             except requests.exceptions.RequestException as e:
                 print(f"Request failed (attempt {attempt + 1}/{max_retries}): {e}")
-                self._set_user_agent()
                 if attempt < max_retries - 1:
-                    sleep_time = (attempt + 1) * 10  # 10초, 20초, 30초...
+                    self._set_user_agent()
+                    sleep_time = (attempt + 1) # 1초, 2초, 3초...
                     print(f"Waiting {sleep_time} seconds before retry...")
                     sleep(sleep_time)
                 else:
@@ -487,6 +487,7 @@ class MarketDataCollector:
         self.data_processor.export_to_csv(
             final_dataframe, f"korea_price_{order_date.strftime(DATE_FORMAT)}"
         )
+    
     def collect_add_index_data(self, order_date: date, start_date: date, end_date: date):
         trading_days = self.data_processor.get_trading_days(
             start_date, end_date
