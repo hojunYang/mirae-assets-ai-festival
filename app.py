@@ -223,5 +223,7 @@ if __name__ == "__main__":
         host=host,
         port=port,
         reload=False,
-        log_level="info"
+        log_level="info",
+        timeout_keep_alive=300,
+        timeout_graceful_shutdown=30  # 30초 graceful shutdown
     ) 
