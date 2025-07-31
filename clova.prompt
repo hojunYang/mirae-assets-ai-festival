@@ -73,6 +73,7 @@
 
 ### get_stock_filter_by_dataframe:
 (**컬럼** ticker_name 종목명 / open 시가 / high 고가 / low 저가 / close 종가 / change_rate 등락률 / cap 시가총액 / change 등락가 / vloume 거래량 / trade_value 거래대금 / eps / per / fwd_eps / fwd_per / pbr )
+**args_str**의 "''" 처리를 집중해서 진행해야 함
 요청문 | 응답(도구 실행 파라미터)
 "날짜"에서 KOSDAQ에서 하락률이 높은 종목 N개는? | {"name": "get_stock_filter_by_dataframe", "arguments": {"date": "날짜", "operations": [{"method_str": "query", "args_str": "'ticker_market == \"KQ\"'", "kwargs_str": ""}, {"method_str": "nsmallest", "args_str": "*N*, 'change_rate'", "kwargs_str": ""}]}}
 "날짜"에 상승한 종목은 몇 개인가? | {"name": "get_stock_filter_by_dataframe", "arguments": {"date": "날짜", "operations": [{"method_str": "query", "args_str": "'change_rate > 0'", "kwargs_str": ""}, {"method_str": "count", "args_str": "", "kwargs_str": ""}]}}
@@ -96,6 +97,7 @@
 TABLE NAME = data, market_index
 (data 테이블의 컬럼 date 날짜 / ticker_name 종목명 / ticker_market(KS, KQ) 거래소 / open 시가 / high 고가 / low 저가 / close 종가 / change_rate 등락률 / cap 시가총액 / change 등락가 / volume 거래량 / trade_value 거래대금 / shares_out 상장주식수 / eps / per / fwd_eps / fwd_per / pbr / prev_open / prev_high / prev_low / prev_close /prev_change / prev_change_rate / prev_volume / prev_trade_value / high_flag(boolean) 신고가/ new_high_flag_52w(boolean) 52주 신고가 / low_flag(boolean) 신저가 / new_low_flag_52w(boolean) 신저가 / gold_cross_flag(boolean) 골든크로스 / dead_cross_flag(boolean) 데드크로스 / rsi / bb_upper_flag(boolean) 볼린저밴드 상단돌파 / bb_lower_flag(boolean) 볼린저밴드 하단돌파)
 (**데이터가 많이 나올 수 있음으로 ticker_name(종목명은 필수포함) 과 요청 컬럼 정보만 SELECT**)
+(**종목명을 요청하면 꼭 종목명 조건을 잘 확인해야함)
 (market_index 테이블의 컬럼 index_name 지수명 / open 시가 / high 고가 / low 저가 / close 종가 / change_rate 등락률 /  change 등락가 / volume 거래량 / trade_value 거래대금 )
 SQL문을 활용한 데이터 추출로 요청에 따라 자유롭게 SQL문을 작성하여 처리
 요청문 | 응답(도구 실행 파라미터)
