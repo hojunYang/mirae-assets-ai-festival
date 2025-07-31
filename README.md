@@ -1,5 +1,4 @@
 ## API 입력값 / 호출값 작성
-
 API URL = http://49.50.132.254/agent
 
 ### API 입력 헤더
@@ -35,9 +34,9 @@ headers = {
     "X-NCP-CLOVASTUDIO-REQUEST-ID": "your-request-id"
 }
 
-params = {"question": {질문내용}"}
+params = {"question": "질문내용"}
 response = requests.get("http://49.50.132.254/agent", params=params, headers=headers)
-print(response.text) # LLM 응답 텍스트 출력
+print(response.text.replace('\\n', '\n')) # LLM 응답 텍스트 출력
 ```
 
 ## 시스템 설계 및 아키텍처
@@ -115,7 +114,7 @@ print(response.text) # LLM 응답 텍스트 출력
 - **시간적 제약**: 과거 데이터 수집 및 분석에 소요되는 시간
 
 ### 2. 시스템 플로우
-```mermaid
+```
 사용자 전략 입력 → LLM SQL 생성 → 조건 필터링 → 백테스팅 엔진 → 성과 분석 → 결과 리포트
 ```
 
@@ -167,3 +166,11 @@ def backtest_strategy(signal_df, profit_rate=0.10, stoploss_rate=0.05):
 - "PBR ≤ 0.7이면서 등락률 ≥ 10%인 가치+모멘텀 하이브리드 전략, 성과 확인해줘. 목표 10%, 손절 5%"
 - "EPS가 플러스이고 PER ≤ 0.7인 알짜 종목으로 전략을 돌려봐. 익절 10%, 손절 5%."
 - "52주 신고가이면서 등락률도 15% 넘는 종목을 브레이크아웃 전략으로 매수했을 때 성과를 알려줘. 목표 10%, 손절 5%."
+
+## 소감
+안녕하세요, 조건검색 팀의 양호준입니다. 
+처음에는 Agent 개발 아이디어로 조건검색 기능을 만들어야겠다고 생각하고 팀을 동록했는데, 알고 보니 조건검색 기능은 기본적으로 구현하는 것이라 머쓱했네요. 
+LLM의 MCP와 같은 Agent를 처음으로 만들면서 LLM 모델에 대한 이해를 높일 수 있었습니다.
+Function Calling을 사용하려면 Clova X V3를 사용해야 하는데, 이 모델들은 튜닝 기능을 지원하지 않다보니 많이 어려웠습니다. 다른 팀들은 어떻게 해결했을지 궁금하네요.
+서버 개발에 대한 경험이 부족하여 여러 요청을 비동기적으로 처리하는 로직을 구현하지 못한 점이 아쉽습니다. 혼자 개발하다 보니 시간이 점점 부족해져 서둘러 구현하게 되었지만, 많은 것을 배울 수 있는 좋은 경험이었습니다.
+감사합니다.

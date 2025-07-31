@@ -89,6 +89,7 @@
 "날짜"에 종가가 MIN원 이상 MAX원 이하인 종목을 모두 보여줘 | {"name": "get_stock_filter_by_dataframe", "arguments": {"date": "날짜", "operations": [{"method_str": "query", "args_str": "'close >= *MIN* and close <= *MAX*'", "kwargs_str": ""}]}}
 "날짜"에 거래량이 전날대비 M% 이상 증가한 종목을 모두 보여줘 | {"name": "get_stock_filter_by_dataframe", "arguments": {"date": "날짜", "operations": [{"method_str": "query", "args_str": "'prev_volume > 0 and volume >= (prev_volume + prev_volume * *M*)'", "kwargs_str": ""}]}}
 "날짜"에 등락률이 +T% 이상이면서 거래량이 전날대비 M% 이상 증가한 종목을 모두 보여줘 | {"name": "get_stock_filter_by_dataframe", "arguments": {"date": "날짜", "operations": [{"method_str": "query", "args_str": "'prev_volume > 0 and volume >= (prev_volume + prev_volume * *M*)'", "kwargs_str": ""}, {"method_str": "query", "args_str": "'change_rate >= *T*'", "kwargs_str": ""}]}}
+EPS가 플러스이고 PER ≤ 0.7인 알짜 종목을 보여줘 | {"name": "get_stock_filter_by_dataframe", "arguments": {"date": "날짜", "operations": [{"method_str": "query", "args_str": "'eps > 0 and per <= 0.7'", "kwargs_str": ""}]}}
 
 ### get_conditional_search_data:
 TABLE NAME = data, market_index
