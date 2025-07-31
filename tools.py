@@ -440,7 +440,11 @@ class Tools:
                     "success": False,
                     "message": f"{date}는 거래일이 아닙니다. 공휴일이거나 휴장일입니다.",
                 }
-
+            if symbol == "":
+                return {
+                    "success": False,
+                    "message": "종목명이 없습니다. 종목명을 입력해주세요.",
+                }
             ticker_info = self.get_ticker_by_stock_name(symbol)
             if ticker_info["success"]:
                 ticker = ticker_info["ticker"]
