@@ -75,6 +75,7 @@ class MiraeAIFestivalchatbot:
             "repetitionPenalty": 0.9,
             "stop": [],
             "includeAiFilters": True,
+            "seed": 0,
             "tools": self.tools.function_definitions,
             "tool_choice": "auto",
         }
@@ -263,6 +264,7 @@ class MiraeAIFestivalchatbot:
                         "repetitionPenalty": 0.9,
                         "stop": [],
                         "includeAiFilters": True,
+                        "seed": 0,
                         "tools": self.tools.function_definitions,
                         "tool_choice": "auto",
                     }
