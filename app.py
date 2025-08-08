@@ -36,7 +36,7 @@ with open("clova.prompt", "r", encoding="utf-8") as f:
 
 # CLOVA Studio 설정
 CLOVASTUDIO_ENDPOINT = (
-    "https://clovastudio.stream.ntruss.com/testapp/v3/chat-completions/HCX-005"
+    "https://clovastudio.stream.ntruss.com/v3/chat-completions/HCX-005"
 )
 
 # 최대 대화 메시지 수
